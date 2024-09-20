@@ -5,6 +5,7 @@ import {
   useDeleteProductMutation,
   useGetProductByIdQuery,
   useUploadProductImageMutation,
+  useUploadProductCodeMutation,
 } from "../../redux/api/productApiSlice";
 import { useFetchCategoriesQuery } from "../../redux/api/categoryApiSlice";
 import { toast } from "react-toastify";
@@ -18,27 +19,21 @@ const AdminProductUpdate = () => {
 
   const [image, setImage] = useState(productData?.image || "");
   const [name, setName] = useState(productData?.name || "");
-  const [description, setDescription] = useState(
-    productData?.description || ""
-  );
+  const [description, setDescription] = useState(productData?.description || "");
   const [price, setPrice] = useState(productData?.price || "");
   const [category, setCategory] = useState(productData?.category || "");
   const [quantity, setQuantity] = useState(productData?.quantity || "");
   const [brand, setBrand] = useState(productData?.brand || "");
   const [stock, setStock] = useState(productData?.countInStock);
+  const [code, setCode] = useState(productData?.code || "");
 
-  // hook
   const navigate = useNavigate();
 
-  // Fetch categories using RTK Query
   const { data: categories = [] } = useFetchCategoriesQuery();
 
   const [uploadProductImage] = useUploadProductImageMutation();
-
-  // Define the update product mutation
+  const [uploadProductCode] = useUploadProductCodeMutation();
   const [updateProduct] = useUpdateProductMutation();
-
-  // Define the delete product mutation
   const [deleteProduct] = useDeleteProductMutation();
 
   useEffect(() => {
@@ -50,6 +45,7 @@ const AdminProductUpdate = () => {
       setQuantity(productData.quantity);
       setBrand(productData.brand);
       setImage(productData.image);
+      setCode(productData.code);
     }
   }, [productData]);
 
@@ -58,13 +54,31 @@ const AdminProductUpdate = () => {
     formData.append("image", e.target.files[0]);
     try {
       const res = await uploadProductImage(formData).unwrap();
-      toast.success("Item added successfully", {
+      toast.success("Image uploaded successfully", {
         position: toast.POSITION.TOP_RIGHT,
         autoClose: 2000,
       });
       setImage(res.image);
     } catch (err) {
-      toast.success("Item added successfully", {
+      toast.error("Image upload failed", {
+        position: toast.POSITION.TOP_RIGHT,
+        autoClose: 2000,
+      });
+    }
+  };
+
+  const uploadCodeHandler = async (e) => {
+    const formData = new FormData();
+    formData.append("code", e.target.files[0]);
+    try {
+      const res = await uploadProductCode(formData).unwrap();
+      toast.success("Code uploaded successfully", {
+        position: toast.POSITION.TOP_RIGHT,
+        autoClose: 2000,
+      });
+      setCode(res.code);
+    } catch (err) {
+      toast.error("Code upload failed", {
         position: toast.POSITION.TOP_RIGHT,
         autoClose: 2000,
       });
@@ -83,8 +97,8 @@ const AdminProductUpdate = () => {
       formData.append("quantity", quantity);
       formData.append("brand", brand);
       formData.append("countInStock", stock);
+      formData.append("code", code);
 
-      // Update product using the RTK Query mutation
       const data = await updateProduct({ productId: params._id, formData });
 
       if (data?.error) {
@@ -132,7 +146,7 @@ const AdminProductUpdate = () => {
 
   return (
     <>
-      <div className="container  xl:mx-[9rem] sm:mx-[0]">
+      <div className="container xl:mx-[9rem] sm:mx-[0]">
         <div className="flex flex-col md:flex-row">
           <div className="md:w-3/4 p-3">
             <div className="h-12">Update / Delete Product</div>
@@ -148,7 +162,7 @@ const AdminProductUpdate = () => {
             )}
 
             <div className="mb-3">
-              <label className="text-white  py-2 px-4 block w-full text-center rounded-lg cursor-pointer font-bold py-11">
+              <label className="text-white py-2 px-4 block w-full text-center rounded-lg cursor-pointer font-bold py-11">
                 {image ? image.name : "Upload image"}
                 <input
                   type="file"
@@ -159,6 +173,25 @@ const AdminProductUpdate = () => {
                 />
               </label>
             </div>
+
+            <div className="mb-3">
+              <label className="text-white py-2 px-4 block w-full text-center rounded-lg cursor-pointer font-bold py-11">
+                {code ? "Code uploaded" : "Upload code (ZIP file)"}
+                <input
+                  type="file"
+                  name="code"
+                  accept=".zip"
+                  onChange={uploadCodeHandler}
+                  className="text-white"
+                />
+              </label>
+            </div>
+
+            {code && (
+              <div className="mb-3">
+                <p>Current code file: {code}</p>
+              </div>
+            )}
 
             <div className="p-3">
               <div className="flex flex-wrap">
@@ -182,6 +215,7 @@ const AdminProductUpdate = () => {
                   />
                 </div>
               </div>
+
 
               <div className="flex flex-wrap">
                 <div>
@@ -245,13 +279,13 @@ const AdminProductUpdate = () => {
               <div className="">
                 <button
                   onClick={handleSubmit}
-                  className="py-4 px-10 mt-5 rounded-lg text-lg font-bold  bg-green-600 mr-6"
+                  className="py-4 px-10 mt-5 rounded-lg text-lg font-bold bg-green-600 mr-6"
                 >
                   Update
                 </button>
                 <button
                   onClick={handleDelete}
-                  className="py-4 px-10 mt-5 rounded-lg text-lg font-bold  bg-pink-600"
+                  className="py-4 px-10 mt-5 rounded-lg text-lg font-bold bg-pink-600"
                 >
                   Delete
                 </button>

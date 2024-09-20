@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import {
   useCreateProductMutation,
   useUploadProductImageMutation,
+  useUploadProductCodeMutation,
 } from "../../redux/api/productApiSlice";
 import { useFetchCategoriesQuery } from "../../redux/api/categoryApiSlice";
 import { toast } from "react-toastify";
@@ -17,9 +18,12 @@ const ProductList = () => {
   const [brand, setBrand] = useState("");
   const [stock, setStock] = useState(0);
   const [imageUrl, setImageUrl] = useState(null);
+  const [code, setCode] = useState(null);
+  const [codeUrl, setCodeUrl] = useState(null);
   const navigate = useNavigate();
 
   const [uploadProductImage] = useUploadProductImageMutation();
+  const [uploadProductCode] = useUploadProductCodeMutation();
   const [createProduct] = useCreateProductMutation();
   const { data: categories } = useFetchCategoriesQuery();
 
@@ -42,6 +46,7 @@ const ProductList = () => {
       productData.append("quantity", quantity);
       productData.append("brand", brand);
       productData.append("countInStock", stock);
+      productData.append("code", code);
 
       console.log('image:', image);
       console.log('name:', name);
@@ -51,12 +56,12 @@ const ProductList = () => {
       console.log('quantity:', quantity);
       console.log('brand:', brand);
       console.log('stock:', stock);
+      console.log('code:', code);
 
       const { data } = await createProduct(productData);
 
       if (data.error) {
-        console.log('Khoaaaaa');
-        toast.error("Product create failed. Try Againnnnnnnnnnnnnnnnnnnnnnnn.");
+        toast.error("Product create failed. Try Again.");
       } else {
         toast.success(`${data.name} is created`);
         navigate("/");
@@ -78,6 +83,26 @@ const ProductList = () => {
       setImageUrl(res.image);
     } catch (error) {
       toast.error(error?.data?.message || error.error);
+    }
+  };
+
+  const uploadCodeHandler = async (e) => {
+    const file = e.target.files[0];
+    console.log(file.type);
+    if (file && file.type === "application/x-zip-compressed") {
+      const formData = new FormData();
+      formData.append("code", file);
+
+      try {
+        const res = await uploadProductCode(formData).unwrap();
+        toast.success(res.message);
+        setCode(res.code);
+        setCodeUrl(res.code);
+      } catch (error) {
+        toast.error(error?.data?.message || error.error);
+      }
+    } else {
+      toast.error("Please upload a valid ZIP file.");
     }
   };
 
@@ -107,6 +132,20 @@ const ProductList = () => {
                 accept="image/*"
                 onChange={uploadFileHandler}
                 className={!image ? "hidden" : "text-white"}
+              />
+            </label>
+          </div>
+
+          <div className="mb-3">
+            <label className="border text-white px-4 block w-full text-center rounded-lg cursor-pointer font-bold py-11">
+              {code ? code.name : "Upload Code"}
+
+              <input
+                type="file"
+                name="code"
+                accept=".zip"
+                onChange={uploadCodeHandler}
+                className={!code ? "hidden" : "text-white"}
               />
             </label>
           </div>
