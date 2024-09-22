@@ -12,7 +12,7 @@ const App = () => {
       <ToastContainer />
       {userInfo ? (userInfo.isAdmin && <AdminMenu />) : null}
       <Navigation />
-      <main className="py-3">
+      <main className="py-3 overflow-x-hidden">
         <Outlet />
       </main>
     </>

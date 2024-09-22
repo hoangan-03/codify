@@ -64,11 +64,11 @@ const ProductDetails = () => {
   };
 
   return (
-    <>
+    <div className="pt-[50px] w-screen h-auto flex flex-col px-24">
       <div>
         <Link
           to="/"
-          className="text-white font-semibold hover:underline ml-[10rem]"
+          className="text-white text-xl font-semibold hover:underline"
         >
           Go Back
         </Link>
@@ -82,12 +82,12 @@ const ProductDetails = () => {
         </Message>
       ) : (
         <>
-          <div className="flex flex-wrap relative items-between mt-[2rem] ml-[10rem]">
+          <div className="flex flex-wrap relative items-between mt-[2rem]">
             <div>
               <img
                 src={product.image}
                 alt={product.name}
-                className="w-full xl:w-[50rem] lg:w-[45rem] md:w-[30rem] sm:w-[20rem] mr-[2rem]"
+                className="w-full xl:w-[30rem] lg:w-[15rem] md:w-[10rem] mr-[2rem] rounded-2xl"
               />
 
               <HeartIcon product={product} />
@@ -111,8 +111,8 @@ const ProductDetails = () => {
                     <FaClock className="mr-2 text-white" /> Added:{" "}
                     {moment(product.createAt).fromNow()}
                   </h1>
-                  <h1 className="flex items-center mb-6">
-                    <FaStar className="mr-2 text-white" /> Reviews:{" "}
+                  <h1 className="flex items-center mb-6 ">
+                    <FaStar className="mr-2 text-white" />  Reviews:{" "}
                     {product.numReviews}
                   </h1>
                 </div>
@@ -135,7 +135,7 @@ const ProductDetails = () => {
               <div className="flex justify-between flex-wrap">
                 <Ratings
                   value={product.rating}
-                  text={`${product.numReviews} reviews`}
+                  text={`${product.numReviews} reviews `}
                 />
 
                 {product.countInStock > 0 && (
@@ -181,7 +181,7 @@ const ProductDetails = () => {
           </div>
         </>
       )}
-    </>
+    </div>
   );
 };
 
