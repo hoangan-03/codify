@@ -41,6 +41,7 @@ const Register = () => {
         navigate(redirect);
         toast.success("User successfully registered");
       } catch (err) {
+        console.log("What is this err")
         console.log(err);
         toast.error(err.data.message);
       }
@@ -56,7 +57,7 @@ const Register = () => {
           <div className="my-[2rem]">
             <label
               htmlFor="name"
-              className="block text-sm font-medium text-white"
+              className="block text-sm font-medium text-black mb-2"
             >
               Name
             </label>
@@ -73,7 +74,7 @@ const Register = () => {
           <div className="my-[2rem]">
             <label
               htmlFor="email"
-              className="block text-sm font-medium text-white"
+              className="block text-sm font-medium text-black mb-2"
             >
               Email Address
             </label>
@@ -90,7 +91,7 @@ const Register = () => {
           <div className="my-[2rem]">
             <label
               htmlFor="password"
-              className="block text-sm font-medium text-white"
+              className="block text-sm font-medium text-black mb-2"
             >
               Password
             </label>
@@ -107,7 +108,7 @@ const Register = () => {
           <div className="my-[2rem]">
             <label
               htmlFor="confirmPassword"
-              className="block text-sm font-medium text-white"
+              className="block text-sm font-medium text-black mb-2"
             >
               Confirm Password
             </label>
@@ -120,32 +121,38 @@ const Register = () => {
               onChange={(e) => setConfirmPassword(e.target.value)}
             />
           </div>
-
-          <button
-            disabled={isLoading}
-            type="submit"
-            className="bg-pink-500 text-white px-4 py-2 rounded cursor-pointer my-[1rem]"
-          >
-            {isLoading ? "Registering..." : "Register"}
-          </button>
+          <div className="flex w-full">
+            <button
+              disabled={isLoading}
+              type="submit"
+              className={`bg-blue-500 text-black px-4 py-2 w-full rounded cursor-pointer my-[1rem] transition duration-300 ease-in-out ${
+                isLoading ? 'cursor-not-allowed opacity-50' : 'hover:bg-blue-600 active:bg-green-500'
+              }`}
+            >
+              <div className="text-white flex w-full justify-center items-center">
+                {isLoading ? 'Registering...' : 'Register'}
+              </div>
+            </button>
+          </div>
 
           {isLoading && <Loader />}
+          
+          <div className="flex w-full justify-center mt-4">
+            <p className="text-black">
+              Already have an account?{" "}
+              <Link
+                to={redirect ? `/login?redirect=${redirect}` : "/login"}
+                className="text-blue-500 hover:underline"
+              >
+                Login
+              </Link>
+            </p>
+          </div>
         </form>
-
-        <div className="mt-4">
-          <p className="text-white">
-            Already have an account?{" "}
-            <Link
-              to={redirect ? `/login?redirect=${redirect}` : "/login"}
-              className="text-pink-500 hover:underline"
-            >
-              Login
-            </Link>
-          </p>
-        </div>
       </div>
+      
       <img
-        src="https://images.unsplash.com/photo-1576502200916-3808e07386a5?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2065&q=80"
+        src="https://scontent.fhan4-5.fna.fbcdn.net/v/t39.30808-6/306146219_417669420451370_5895257390393900076_n.jpg?_nc_cat=103&ccb=1-7&_nc_sid=6ee11a&_nc_ohc=s28dYEPMJBQQ7kNvgFovm_y&_nc_ht=scontent.fhan4-5.fna&oh=00_AYCjIHbEDviY4kkD5tnwtCcknsPgNDHHiyiS93celRMO3w&oe=66F92DEC"
         alt=""
         className="h-[65rem] w-[59%] xl:block md:hidden sm:hidden rounded-lg"
       />

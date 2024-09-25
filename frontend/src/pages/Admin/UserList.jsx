@@ -95,7 +95,7 @@ const UserList = () => {
                           />
                           <button
                             onClick={() => updateHandler(user._id)}
-                            className="ml-2 bg-blue-500 text-white py-2 px-4 rounded-lg"
+                            className="ml-2 bg-blue-500 text-black py-2 px-4 rounded-lg"
                           >
                             <FaCheck />
                           </button>
@@ -124,7 +124,7 @@ const UserList = () => {
                           />
                           <button
                             onClick={() => updateHandler(user._id)}
-                            className="ml-2 bg-blue-500 text-white py-2 px-4 rounded-lg"
+                            className="ml-2 bg-blue-500 text-black py-2 px-4 rounded-lg"
                           >
                             <FaCheck />
                           </button>
@@ -154,7 +154,7 @@ const UserList = () => {
                         <div className="flex">
                           <button
                             onClick={() => deleteHandler(user._id)}
-                            className="bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
+                            className="bg-red-600 hover:bg-red-700 text-black font-bold py-2 px-4 rounded"
                           >
                             <FaTrash />
                           </button>

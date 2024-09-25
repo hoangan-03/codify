@@ -31,7 +31,6 @@ const Login = () => {
     e.preventDefault();
     try {
       const res = await login({ email, password }).unwrap();
-      console.log(res);
       dispatch(setCredentials({ ...res }));
       navigate(redirect);
     } catch (err) {
@@ -49,62 +48,75 @@ const Login = () => {
             <div className="my-[2rem]">
               <label
                 htmlFor="email"
-                className="block text-sm font-medium text-white"
+                className="block text-sm font-medium text-black mb-2"
               >
                 Email Address
               </label>
               <input
                 type="email"
                 id="email"
-                className="mt-1 p-2 border rounded w-full"
+                className="p-2 border rounded w-full"
                 placeholder="Enter email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
               />
             </div>
 
-            <div className="mb-4">
+            <div className="my-[2rem]">
               <label
                 htmlFor="password"
-                className="block text-sm font-medium text-white"
+                className="block text-sm font-medium text-black mb-2"
               >
                 Password
               </label>
               <input
                 type="password"
                 id="password"
-                className="mt-1 p-2 border rounded w-full"
+                className="p-2 border rounded w-full"
                 placeholder="Enter password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
               />
             </div>
 
-            <button
-              disabled={isLoading}
-              type="submit"
-              className="bg-pink-500 text-white px-4 py-2 rounded cursor-pointer my-[1rem]"
-            >
-              {isLoading ? "Signing In..." : "Sign In"}
-            </button>
+            <div className="flex w-full">
+              <button
+                disabled={isLoading}
+                type="submit"
+                className={`bg-blue-500 text-black px-4 py-2 w-full rounded cursor-pointer my-[1rem] transition duration-300 ease-in-out ${
+                  isLoading
+                    ? "cursor-not-allowed opacity-50"
+                    : "hover:bg-blue-600 active:bg-green-500"
+                }`}
+              >
+                <div className="text-white flex w-full justify-center items-center">
+                  {isLoading ? "Signing In..." : "Sign In"}
+                </div>
+              </button>
+            </div>
 
-            {isLoading && <Loader />}
+            <div className="flex w-full justify-center">
+              {isLoading && <Loader />}
+            </div>
           </form>
 
-          <div className="mt-4">
-            <p className="text-white">
-              New Customer?{" "}
-              <Link
-                to={redirect ? `/register?redirect=${redirect}` : "/register"}
-                className="text-pink-500 hover:underline"
-              >
-                Register
-              </Link>
-            </p>
+          <div className="flex w-full justify-center">
+            <div className="mt-4">
+              <p className="text-black">
+                New Customer?{" "}
+                <Link
+                  to={redirect ? `/register?redirect=${redirect}` : "/register"}
+                  className="text-blue-500 hover:underline"
+                >
+                  Register
+                </Link>
+              </p>
+            </div>
           </div>
         </div>
+
         <img
-          src="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1964&q=80"
+          src="https://scontent.fhan4-5.fna.fbcdn.net/v/t39.30808-6/306146219_417669420451370_5895257390393900076_n.jpg?_nc_cat=103&ccb=1-7&_nc_sid=6ee11a&_nc_ohc=s28dYEPMJBQQ7kNvgFovm_y&_nc_ht=scontent.fhan4-5.fna&oh=00_AYCjIHbEDviY4kkD5tnwtCcknsPgNDHHiyiS93celRMO3w&oe=66F92DEC"
           alt=""
           className="h-[65rem] w-[59%] xl:block md:hidden sm:hidden rounded-lg"
         />

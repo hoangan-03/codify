@@ -5,6 +5,7 @@ import {
   AiOutlineLogin,
   AiOutlineUserAdd,
   AiOutlineShoppingCart,
+  AiOutlineLogout,
 } from "react-icons/ai";
 import { FaHeart } from "react-icons/fa";
 import { Link } from "react-router-dom";
@@ -14,6 +15,8 @@ import { useSelector, useDispatch } from "react-redux";
 import { useLogoutMutation } from "../../redux/api/usersApiSlice";
 import { logout } from "../../redux/features/auth/authSlice";
 import FavoritesCount from "../Products/FavoritesCount";
+import { CgProfile } from "react-icons/cg";
+import { BiExpandHorizontal } from "react-icons/bi";
 
 const Navigation = () => {
   const { userInfo } = useSelector((state) => state.auth);
@@ -71,7 +74,7 @@ const Navigation = () => {
             <span className="hidden nav-item-name ">Cart</span>{" "}
           </div>
 
-          <div className="absolute top-9">
+          <div className="absolute top-5 left-6">
             {cartItems.length > 0 && (
               <span>
                 <span className="px-1 py-0 text-sm text-white bg-pink-500 rounded-full">
@@ -99,40 +102,30 @@ const Navigation = () => {
           className="flex items-center text-gray-800 focus:outline-none"
         >
           {userInfo ? (
-            <span className="text-white">{userInfo.username}</span>
+            <span className="text-black">{userInfo.username}</span>
           ) : (
             <></>
           )}
-          {userInfo && (
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              className={`h-4 w-4 ml-1 ${dropdownOpen ? "transform rotate-180" : ""
-                }`}
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="white"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-                d={dropdownOpen ? "M5 15l7-7 7 7" : "M19 9l-7 7-7-7"}
-              />
-            </svg>
-          )}
+          <BiExpandHorizontal className=" ml-2 mr-2" size={20}/>
         </button>
 
         {dropdownOpen && userInfo && (
           <div className={`flex space-x-10`}
           >
-            <Link to="/profile" className="block px-4  hover:bg-gray-800">
-              Profile
+            <Link
+              to="/profile"
+              className="flex items-center  transition-transform transform hover:translate-x-2"
+            >
+              <CgProfile className="ml-2 mr-2 " size={26} />
+              <span className="hidden nav-item-name">Profile</span>
             </Link>
+
             <button
               onClick={logoutHandler}
-              className="block w-full px-4  text-left hover:bg-gray-800"
+              className="flex items-center w-full px-4 transition-transform transform hover:translate-x-2 text-left"
             >
-              Logout
+              <AiOutlineLogout className="ml-2 mr-2" size={26} />
+              <span className="hidden nav-item-name">Logout</span>
             </button>
 
           </div>

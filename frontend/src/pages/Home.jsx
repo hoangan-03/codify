@@ -21,13 +21,13 @@ const Home = () => {
       ) : (
         <div className="flex flex-col gap-4 px-[15rem] pt-[5rem]">
           <div className="flex justify-between flex-row items-center">
-            <h1 className="text-white font-bold text-3xl">
+            <h1 className="text-black font-bold text-3xl">
               Special Products
             </h1>
 
             <Link
               to="/shop"
-              className="bg-pink-600 hover:bg-pink-500 font-bold rounded-full py-2 px-10 "
+              className="text-white bg-blue-600 hover:bg-blue-500 font-bold rounded-full py-2 px-10 "
             >
               Shop
             </Link>
