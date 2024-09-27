@@ -101,12 +101,12 @@ const Navigation = () => {
           onClick={toggleDropdown}
           className="flex items-center text-gray-800 focus:outline-none"
         >
-          {userInfo ? (
+        {userInfo && userInfo.username ? (
+          <>
             <span className="text-black">{userInfo.username}</span>
-          ) : (
-            <></>
-          )}
-          <BiExpandHorizontal className=" ml-2 mr-2" size={20}/>
+            <BiExpandHorizontal className="ml-2 mr-2" size={20} />
+          </>
+        ) : null}
         </button>
 
         {dropdownOpen && userInfo && (

@@ -38,7 +38,7 @@ const ProductCard = ({ p }) => {
           <h5 className="mb-2 text-xl text-whiet dark:text-black">{p?.name}</h5>
 
           <p className="text-black font-semibold text-blue-500">
-            {p?.price?.toLocaleString("en-US", {
+            {p?.price?.toLocaleString("de-DE", {
               style: "currency",
               currency: "USD",
             })}
