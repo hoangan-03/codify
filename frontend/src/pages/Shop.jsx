@@ -124,7 +124,7 @@ const Shop = () => {
           </div>
 
           <h2 className="h4 text-start ml-2 py-1 bg-white rounded-full ">
-            Filter by Brands
+            Brands
           </h2>
           <div className="mt-2 mb-5 ml-2">
             {uniqueBrands?.map((brand) => (
@@ -152,10 +152,10 @@ const Shop = () => {
           </div>
 
           <h2 className="h4 text-start ml-2 py-1 bg-white rounded-full">
-            Filter by Price
+            Price
           </h2>
 
-          <div className="mt-2 mb-5 ml-2 w-[15rem]">
+          <div className="mt-2 mb-1 ml-2 w-[15rem]">
             <input
               type="text"
               placeholder="Enter Price"
@@ -165,12 +165,12 @@ const Shop = () => {
             />
           </div>
 
-          <div className="px-4 mt-0">
+          <div className="px-4 mt-4 flex justify-center items-start">
             <button
-              className="w-full border my-4 py-2  rounded-3xl bg-teal-600 text-white transition-colors duration-300"
+              className="w-full border py-2 font-bold rounded-3xl bg-teal-600 text-white transition-colors duration-300"
               onClick={() => window.location.reload()}
             >
-              Reset
+              Clear filters
             </button>
           </div>
         </div>
