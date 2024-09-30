@@ -24,19 +24,18 @@ const Cart = () => {
 
   return (
     <>
-      <div className="container flex justify-around items-start flex wrap mx-auto mt-8">
+      <div className="container flex justify-around items-start wrap mx-auto mt-8">
         {cartItems.length === 0 ? (
           <div>
             Your cart is empty <Link to="/shop">Go To Shop</Link>
           </div>
         ) : (
           <>
-            <div className="flex flex-col w-[80%]">
-              <h1 className="text-2xl font-semibold mb-4">Shopping Cart</h1>
-
+            <div className="flex flex-col w-[80%] gap-10">
+              <h1 className="text-3xl font-bold mb-4">Shopping Cart</h1>
               {cartItems.map((item) => (
                 <div key={item._id} className="flex items-enter mb-[1rem] pb-2">
-                  <div className="w-[5rem] h-[5rem]">
+                  <div className="w-[500px] h-[300px]">
                     <img
                       src={item.image}
                       alt={item.name}
@@ -44,13 +43,13 @@ const Cart = () => {
                     />
                   </div>
 
-                  <div className="flex-1 ml-4">
-                    <Link to={`/product/${item._id}`} className="text-blue-500">
+                  <div className="flex-1 ml-8">
+                    <Link to={`/product/${item._id}`} className="text-blue-500 font-bold text-2xl">
                       {item.name}
                     </Link>
 
-                    <div className="mt-2 text-black">{item.brand}</div>
-                    <div className="mt-2 text-black font-bold">
+                    <div className="mt-2 text-black text-xl">{item.brand}</div>
+                    <div className="mt-2 text-black font-bold text-lg">
                       $ {item.price}
                     </div>
                   </div>
@@ -82,21 +81,21 @@ const Cart = () => {
                 </div>
               ))}
 
-              <div className="mt-8 w-[40rem]">
-                <div className="p-4 rounded-lg">
-                  <h2 className="text-xl font-semibold mb-2">
-                    Items ({cartItems.reduce((acc, item) => acc + item.qty, 0)})
-                  </h2>
-
-                  <div className="text-2xl font-bold">
-                    ${" "}
-                    {cartItems
-                      .reduce((acc, item) => acc + item.qty * item.price, 0)
-                      .toFixed(2)}
+              <div className="mt-8 w-full">
+                <div className="p-4 rounded-lg flex flex-row justify-between items-center">
+                  <div className="flex flex-row gap-3 justify-center">
+                    <h2 className="text-xl font-semibold mb-2">
+                      Items ({cartItems.reduce((acc, item) => acc + item.qty, 0)})
+                    </h2>
+                    <div className="text-2xl font-bold">
+                      ${" "}
+                      {cartItems
+                        .reduce((acc, item) => acc + item.qty * item.price, 0)
+                        .toFixed(2)}
+                    </div>
                   </div>
-
                   <button
-                    className="text-white bg-blue-500 mt-4 py-2 px-4 rounded-full text-lg w-full"
+                    className="text-white bg-sky-700 font-bold  mt-4 py-4 px-6 rounded-full text-lg w-auto"
                     disabled={cartItems.length === 0}
                     onClick={checkoutHandler}
                   >
