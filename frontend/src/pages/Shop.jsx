@@ -16,7 +16,6 @@ const Shop = () => {
   const { categories, products, checked, radio } = useSelector(
     (state) => state.shop
   );
-  console.log('products', products)
   const categoriesQuery = useFetchCategoriesQuery();
   const [priceFilter, setPriceFilter] = useState("");
 

@@ -3,25 +3,24 @@ import HeartIcon from "./HeartIcon";
 import Ratings from "./Ratings";
 const Product = ({ product }) => {
   return (
-    <div className="w-[300px] h-auto ml-[2rem] p-3 relative">
-      <div className="relative">
+    <div className="w-[320px] h-auto ml-[2rem] p-3 relative">
         <img
           src={product.image}
           alt={product.name}
-          className="w-[250px] h-auto rounded-xl"
+          className="w-full h-[200px] object-cover rounded-2xl"
         />
         <HeartIcon product={product} />
-        <div className="p-4">
+        <div className="py-4">
           <Link to={`/product/${product._id}`}>
-            <h2 className="flex justify-between items-center">
+            <h2 className="flex justify-between items-start">
               {console.log(product)}
-              <div>
+              <div className="flex flex-col gap-2">
                 <Ratings
                   value={product.rating}
                 />
-                <div className="text-lg">{product.name}</div>
+                <div className="text-lg font-bold ml-1">{product.name}</div>
               </div>
-              <span className="bg-blue-100 text-blue-800 text-sm font-medium mr-2 px-2.5 py-0.5 rounded-full dark:bg-blue-900 dark:text-blue-300">
+              <span className="bg-blue-700 text-white text-sm font-medium mr-2 px-3 py-1 rounded-full">
                 {new Intl.NumberFormat("de-DE", {
                   style: "currency",
                   currency: "USD",
@@ -30,7 +29,6 @@ const Product = ({ product }) => {
             </h2>
           </Link>
         </div>
-      </div>
     </div>
   );
 };
