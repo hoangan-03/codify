@@ -13,7 +13,7 @@ import {
   removeFavoriteFromLocalStorage,
 } from "../../Utils/localStorage";
 
-const HeartIcon = ({ product }) => {
+const HeartIcon = ({ product, size, className, style }) => {
   const dispatch = useDispatch();
   const favorites = useSelector((state) => state.favorites) || [];
   const isFavorite = favorites.some((p) => p._id === product._id);
@@ -37,13 +37,13 @@ const HeartIcon = ({ product }) => {
 
   return (
     <div
-      className="absolute top-2 right-5 cursor-pointer"
+      className={className || "absolute top-2 right-5 cursor-pointer"}
       onClick={toggleFavorites}
     >
       {isFavorite ? (
-        <FaHeart className="text-pink-500" />
+        <FaHeart className="text-pink-500" size={size ? size : ''} />
       ) : (
-        <FaRegHeart className="text-black" />
+        <FaRegHeart className="text-black" size={size ? size : ''} />
       )}
     </div>
   );

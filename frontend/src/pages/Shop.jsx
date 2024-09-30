@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useGetFilteredProductsQuery } from "../redux/api/productApiSlice";
 import { useFetchCategoriesQuery } from "../redux/api/categoryApiSlice";
@@ -16,7 +16,7 @@ const Shop = () => {
   const { categories, products, checked, radio } = useSelector(
     (state) => state.shop
   );
-
+  console.log('products', products)
   const categoriesQuery = useFetchCategoriesQuery();
   const [priceFilter, setPriceFilter] = useState("");
 
@@ -25,7 +25,10 @@ const Shop = () => {
     radio,
   });
 
+  const selectedBrands = useRef([]);
+
   useEffect(() => {
+    // console.log('categoriesQuery')
     if (!categoriesQuery.isLoading) {
       dispatch(setCategories(categoriesQuery.data));
     }
@@ -57,6 +60,15 @@ const Shop = () => {
     dispatch(setProducts(productsByBrand));
   };
 
+  const handleBrandCheck = (value, brand) => {
+    selectedBrands.current = value ? [...selectedBrands.current, brand] : selectedBrands.current.filter((b) => b !== brand);
+    const productsByBrand = JSON.stringify(selectedBrands.current) != JSON.stringify([]) ? filteredProductsQuery.data?.filter(
+      (product) => selectedBrands.current.includes(product.brand)
+    ) : filteredProductsQuery.data;
+    console.log('productsByBrand', productsByBrand)
+    dispatch(setProducts(productsByBrand));
+  };
+
   const handleCheck = (value, id) => {
     const updatedChecked = value
       ? [...checked, id]
@@ -79,33 +91,40 @@ const Shop = () => {
     // Update the price filter state when the user types in the input filed
     setPriceFilter(e.target.value);
   };
-
+  console.log('checked', checked)
+  console.log('radio', radio)
+  console.log('uniqueBrands', uniqueBrands)
+  console.log('selectedBrands', selectedBrands.current)
   return (
     <>
-      <div className="container mx-auto">
+      <div className="ml-1 ">
         <div className="flex md:flex-row" style={{ marginLeft: '4vw' }}>
-          <div className="bg-black p-3 mt-2 mb-2 rounded-lg">
-            <h2 className="h4 text-center py-2 bg-white rounded-full mb-2">
+          <div className=" p-3 mt-2 mb-2 border rounded-lg">
+            <h2 className="py-2 bg-white rounded-full mb-2">
               Filter by Categories
             </h2>
 
-            <div className="p-5 w-[15rem]">
+            <div className=" w-[15rem] flex flex-wrap">
               {categories?.map((c) => (
                 <div key={c._id} className="mb-2">
                   <div className="flex items-center mr-4">
                     <input
+                      style={{ display: 'none' }}
                       type="checkbox"
-                      id="red-checkbox"
+                      id={c._id}
                       onChange={(e) => handleCheck(e.target.checked, c._id)}
                       className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
                     />
 
                     <label
-                      htmlFor="blue-checkbox"
-                      className="ml-2 text-sm font-medium text-white dark:text-gray-300"
+                      // style={{ width: 'content-fit' }}
+
+                      htmlFor={c._id}
+                      className={"ml-2 text-sm font-medium text-[teal] dark:text-gray-300 border px-2 py-1 rounded-lg" + (checked.includes(c._id) ? " bg-[yellow]" : "")}
                     >
                       {c.name}
                     </label>
+
                   </div>
                 </div>
               ))}
@@ -115,7 +134,7 @@ const Shop = () => {
               Filter by Brands
             </h2>
 
-            <div className="p-5">
+            {/* <div className="p-5">
               {uniqueBrands?.map((brand) => (
                 <>
                   <div className="flex items-enter mr-4 mb-5">
@@ -128,8 +147,32 @@ const Shop = () => {
                     />
 
                     <label
-                      htmlFor="blue-radio"
-                      className="ml-2 text-sm font-medium text-white dark:text-gray-300"
+                      htmlFor={brand}
+                      className="ml-2 text-sm font-medium text-[teal] dark:text-gray-300"
+                    >
+                      {brand}
+                    </label>
+                  </div>
+                </>
+              ))}
+            </div> */}
+
+            <div className="p-5">
+              {uniqueBrands?.map((brand) => (
+                <>
+                  <div className="flex items-enter mr-4 mb-5">
+                    <input
+                      style={{ display: 'none' }}
+                      type="checkbox"
+                      id={brand}
+                      name="brand"
+                      onChange={(e) => handleBrandCheck(e.target.checked, brand)}
+                      className={"w-4 h-4 text-blue-400 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"}
+                    />
+
+                    <label
+                      htmlFor={brand}
+                      className={"ml-2 text-sm font-medium text-[teal] dark:text-gray-300 border px-2 py-1 rounded-lg" + (selectedBrands.current.includes(brand) ? " bg-[yellow]" : "")}
                     >
                       {brand}
                     </label>
@@ -154,7 +197,7 @@ const Shop = () => {
 
             <div className="p-5 pt-0">
               <button
-                className="w-full border my-4 text-white"
+                className="w-full border my-4 text-[teal]"
                 onClick={() => window.location.reload()}
               >
                 Reset
@@ -163,8 +206,8 @@ const Shop = () => {
           </div>
 
           <div className="p-3">
-            <h2 className="h4 text-center mb-2">{products?.length} Products</h2>
-            <div className="flex flex-wrap">
+            <h2 className="h4 text-center mb-2 bg-gray-400">{products?.length} Products</h2>
+            <div className="flex flex-wrap gap-3">
               {products.length === 0 ? (
                 <Loader />
               ) : (
@@ -172,6 +215,8 @@ const Shop = () => {
                   <div className="p-3" key={p._id}>
                     <ProductCard p={p} />
                   </div>
+
+
                 ))
               )}
             </div>
