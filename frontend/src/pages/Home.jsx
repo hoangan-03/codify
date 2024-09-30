@@ -25,7 +25,7 @@ const Home = () => {
           {isError?.data?.message || isError?.error}
         </Message>
       ) : (
-        <div className="flex flex-col gap-4">
+        <div className="flex flex-col w-full overflow-hidden gap-4">
           <div className="p-8 bg-black mx-6 rounded-lg">
             <div className="flex flex-col md:flex-row justify-between items-center gap-10">
               <div className="md:w-1/2">

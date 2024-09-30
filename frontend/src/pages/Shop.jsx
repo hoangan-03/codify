@@ -98,10 +98,10 @@ const Shop = () => {
   return (
     <>
       <div className="ml-1 ">
-        <div className="flex md:flex-row" style={{ marginLeft: '4vw' }}>
-          <div className=" p-3 mt-2 mb-2 border rounded-lg">
-            <h2 className="py-2 bg-white rounded-full mb-2">
-              Filter by Categories
+        <div className="flex md:flex-row" style={{ marginLeft: '1vw' }}>
+          <div className="p-3 mb-2 border-gray-200 border-r-2">
+            <h2 className="py-2 bg-white rounded-full mb-2 text-start ml-2">
+              Categories
             </h2>
 
             <div className=" w-[15rem] flex flex-wrap">
@@ -130,7 +130,7 @@ const Shop = () => {
               ))}
             </div>
 
-            <h2 className="h4 text-center py-2 bg-white rounded-full mb-2">
+            <h2 className="h4 text-start ml-2 py-2 bg-white rounded-full mb-2">
               Filter by Brands
             </h2>
 
@@ -157,7 +157,7 @@ const Shop = () => {
               ))}
             </div> */}
 
-            <div className="p-5">
+            <div className="p-2">
               {uniqueBrands?.map((brand) => (
                 <>
                   <div className="flex items-enter mr-4 mb-5">
@@ -181,11 +181,11 @@ const Shop = () => {
               ))}
             </div>
 
-            <h2 className="h4 text-center py-2 bg-white rounded-full mb-2">
+            <h2 className="h4 text-start ml-2 py-2 bg-white rounded-full mb-2">
               Filer by Price
             </h2>
 
-            <div className="p-5 w-[15rem]">
+            <div className="p-2 w-[15rem]">
               <input
                 type="text"
                 placeholder="Enter Price"
@@ -206,8 +206,8 @@ const Shop = () => {
           </div>
 
           <div className="p-3">
-            <h2 className="h4 text-center mb-2 bg-gray-400">{products?.length} Products</h2>
-            <div className="flex flex-wrap gap-3">
+            {/* <h2 className="h4 text-center mb-2 bg-gray-400">{products?.length} Products</h2> */}
+            <div className="flex flex-wrap gap-3 justify-start items-center">
               {products.length === 0 ? (
                 <Loader />
               ) : (

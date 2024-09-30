@@ -18,39 +18,34 @@ const ProductCard = ({ p }) => {
   };
 
   return (
-    <div className="p-4  w-[340px] relative bg-[#F5F5F7] rounded-lg shaodw dark:bg-gray-800 dark:border-gray-700 ">
-      <section className="relative ">
+    <div className="p-4 w-[340px] relative bg-gray-100 rounded-2xl shadow-2xl dark:border-gray-700 ">
+      <section className="relative">
         <Link to={`/product/${p._id}`}>
-          <span className="absolute bottom-3 right-3 bg-blue-100 text-blue-800 text-md font-medium mr-2 px-2.5 py-0.5 rounded-full dark:bg-blue-900 dark:text-blue-300">
+          <span className="absolute bottom-3 right-3 text-sky-700 text-md font-medium mr-2 px-3 py-0.5 rounded-full bg-white">
             {p?.brand}
           </span>
           <img
-            className="cursor-pointer w-full"
+            className="cursor-pointer w-full rounded-xl"
             src={p.image}
             alt={p.name}
-            style={{ objectPosition: '50% 0%', objectFit: 'cover', height: '200px' }}
+            style={{ objectPosition: '50% 0%', objectFit: 'cover', height: '170px' }}
 
           />
         </Link>
       </section>
-
-      <div className="p-5">
+      <div className="p-2">
         <div className="flex justify-between items-center mb-2 ">
           <div>
-
             <div className=" text-xl font-bold text-whiet dark:text-black">{p?.name}</div>
-
           </div>
-
           <Ratings
             value={p.rating}
             size={21}
             color='#FFD700'
           />
-
         </div>
-        <div className="mb-3 font-normal text-[#CFCFCF] text-sm" style={{ whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
-          {p?.description?.substring(0, 60)} fdsfdsfdsfdsfsf sdsds dsddddddddddddddv fdfsdfdsf
+        <div className="mb-3 font-normal text-gray-700 text-base" style={{ whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
+          {p?.description?.substring(0, 60)}
         </div>
 
 
@@ -66,7 +61,7 @@ const ProductCard = ({ p }) => {
             <HeartIcon product={p} size={25} className={'absolute top-2 right-10 cursor-pointer'} />
           </div>
 
-          <div className="bg-blue-100 text-blue-800 text-lg font-medium   py-0.5 rounded-full dark:bg-blue-900 " style={{ whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
+          <div className="bg-blue-100 text-white text-lg font-medium   py-1 px-4 rounded-full dark:bg-blue-900 " style={{ whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
             {new Intl.NumberFormat("de-DE", {
               style: "currency",
               currency: "USD",
@@ -77,16 +72,16 @@ const ProductCard = ({ p }) => {
 
         </section>
       </div>
-      <div className='bg-blue-700 rounded-lg hover:bg-blue-800'>
+      {/* <div className='bg-blue-700 rounded-lg hover:bg-blue-800'>
         <Link
           style={{ display: 'block' }}
           to={`/product/${p._id}`}
-          className="text-white inline-flex items-center px-3 py-2 text-sm font-medium text-center text-black bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+          className="text-white inline-flex items-center px-3 py-2 text-sm font-medium text-center "
         >
-          Read More
+          View More
 
         </Link>
-      </div>
+      </div> */}
     </div>
   );
 };
