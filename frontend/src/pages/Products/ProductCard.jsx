@@ -40,7 +40,7 @@ const ProductCard = ({ p }) => {
           </div>
           <Ratings
             value={p.rating}
-            size={21}
+            size={16}
             color='#FFD700'
           />
         </div>

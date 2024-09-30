@@ -95,7 +95,7 @@ const Cart = () => {
                     </div>
                   </div>
                   <button
-                    className="text-white bg-sky-700 font-bold  mt-4 py-4 px-6 rounded-full text-lg w-auto"
+                    className="text-white bg-sky-700 hover:bg-sky-600 font-bold  mt-4 py-4 px-6 rounded-full text-lg w-auto"
                     disabled={cartItems.length === 0}
                     onClick={checkoutHandler}
                   >
