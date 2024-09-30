@@ -20,7 +20,7 @@ const Product = ({ product }) => {
                 />
                 <div className="text-lg font-bold ml-1">{product.name}</div>
               </div>
-              <span className="bg-blue-700 text-white text-sm font-medium mr-2 px-3 py-1 rounded-full">
+              <span className="bg-blue-700 text-white text-sm font-medium mr-2 px-4 py-1 rounded-full">
                 {new Intl.NumberFormat("de-DE", {
                   style: "currency",
                   currency: "USD",

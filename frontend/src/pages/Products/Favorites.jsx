@@ -7,8 +7,8 @@ const Favorites = () => {
 
   return (
     <div className="ml-[10rem]">
-      <h1 className="text-lg font-bold ml-[3rem] mt-[3rem]">
-        FAVORITE PRODUCTS
+      <h1 className="text-3xl font-bold ml-[3rem] my-[3rem]">
+        Favourite Products
       </h1>
 
       <div className="flex flex-wrap">

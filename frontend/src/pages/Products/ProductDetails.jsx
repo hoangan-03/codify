@@ -70,7 +70,7 @@ const ProductDetails = () => {
           to="/"
           className="text-black text-xl font-semibold hover:underline"
         >
-          Go Back
+          Back to shop
         </Link>
       </div>
 
@@ -95,44 +95,44 @@ const ProductDetails = () => {
 
             <div className="flex flex-col justify-between">
               <h2 className="text-2xl font-semibold">{product.name}</h2>
-              <p className="my-4 xl:w-[35rem] lg:w-[35rem] md:w-[30rem] text-[#B0B0B0]">
+              <p className="my-4 xl:w-[35rem] lg:w-[55rem] md:w-[50rem] text-[#B0B0B0]">
                 {product.description}
               </p>
 
-              <p className="text-5xl my-4 font-extrabold">$ {product.price}</p>
+              <p className="text-5xl mb-6 font-extrabold">$ {product.price}</p>
 
-              <div className="flex items-center justify-between w-[20rem]">
-                <div className="one">
-                  <h1 className="flex items-center mb-6">
+              <div className="flex items-center justify-between w-full">
+                <div className="one flex flex-col gap-8">
+                  <h1 className="flex items-center">
                     <FaStore className="mr-2 text-black" /> Brand:{" "}
                     {product.brand}
                   </h1>
-                  <h1 className="flex items-center mb-6 w-[20rem]">
+                  <h1 className="flex items-center w-[20rem]">
                     <FaClock className="mr-2 text-black" /> Added:{" "}
                     {moment(product.createAt).fromNow()}
                   </h1>
-                  <h1 className="flex items-center mb-6 ">
+                  <h1 className="flex items-center">
                     <FaStar className="mr-2 text-black" />  Reviews:{" "}
                     {product.numReviews}
                   </h1>
                 </div>
 
-                <div className="two">
-                  <h1 className="flex items-center mb-6">
+                <div className="two flex flex-col gap-8">
+                  <h1 className="flex items-center">
                     <FaStar className="mr-2 text-black" /> Ratings: {rating}
                   </h1>
-                  <h1 className="flex items-center mb-6">
+                  <h1 className="flex items-center">
                     <FaShoppingCart className="mr-2 text-black" /> Quantity:{" "}
                     {product.quantity}
                   </h1>
-                  <h1 className="flex items-center mb-6 w-[10rem]">
+                  <h1 className="flex items-centerw-[10rem]">
                     <FaBox className="mr-2 text-black" /> In Stock:{" "}
                     {product.countInStock}
                   </h1>
                 </div>
               </div>
 
-              <div className="flex justify-between flex-wrap">
+              <div className="flex justify-between mt-10 flex-wrap">
                 <Ratings
                   value={product.rating}
                   text={`${product.numReviews} reviews `}
@@ -159,14 +159,14 @@ const ProductDetails = () => {
                 <button
                   onClick={addToCartHandler}
                   disabled={product.countInStock === 0}
-                  className="bg-blue-600 text-white py-2 px-4 rounded-lg mt-4 md:mt-0"
+                  className="bg-sky-600 text-white py-2 px-8 rounded-2xl mt-6"
                 >
                   Add To Cart
                 </button>
               </div>
             </div>
 
-            <div className="mt-[5rem] container flex flex-wrap items-start justify-between ml-[10rem]">
+            {/* <div className="mt-[5rem] container flex flex-wrap items-start justify-between ml-[10rem]">
               <ProductTabs
                 loadingProductReview={loadingProductReview}
                 userInfo={userInfo}
@@ -177,7 +177,7 @@ const ProductDetails = () => {
                 setComment={setComment}
                 product={product}
               />
-            </div>
+            </div> */}
           </div>
         </>
       )}
