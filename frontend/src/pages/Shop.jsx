@@ -52,12 +52,12 @@ const Shop = () => {
     }
   }, [checked, radio, filteredProductsQuery.data, dispatch, priceFilter]);
 
-  const handleBrandClick = (brand) => {
-    const productsByBrand = filteredProductsQuery.data?.filter(
-      (product) => product.brand === brand
-    );
-    dispatch(setProducts(productsByBrand));
-  };
+  // const handleBrandClick = (brand) => {
+  //   const productsByBrand = filteredProductsQuery.data?.filter(
+  //     (product) => product.brand === brand
+  //   );
+  //   dispatch(setProducts(productsByBrand));
+  // };
 
   const handleBrandCheck = (value, brand) => {
     selectedBrands.current = value ? [...selectedBrands.current, brand] : selectedBrands.current.filter((b) => b !== brand);
@@ -75,7 +75,6 @@ const Shop = () => {
     dispatch(setChecked(updatedChecked));
   };
 
-  // Add "All Brands" option to uniqueBrands
   const uniqueBrands = [
     ...Array.from(
       new Set(
@@ -87,7 +86,6 @@ const Shop = () => {
   ];
 
   const handlePriceChange = (e) => {
-    // Update the price filter state when the user types in the input filed
     setPriceFilter(e.target.value);
   };
   console.log('checked', checked)
@@ -95,134 +93,106 @@ const Shop = () => {
   console.log('uniqueBrands', uniqueBrands)
   console.log('selectedBrands', selectedBrands.current)
   return (
-    <>
-      <div className="ml-1 ">
-        <div className="flex md:flex-row" style={{ marginLeft: '1vw' }}>
-          <div className="p-3 mb-2 border-gray-200 border-r-2">
-            <h2 className="py-2 bg-white rounded-full mb-2 text-start ml-2">
-              Categories
-            </h2>
-
-            <div className=" w-[15rem] flex flex-wrap">
-              {categories?.map((c) => (
-                <div key={c._id} className="mb-2">
-                  <div className="flex items-center mr-4">
-                    <input
-                      style={{ display: 'none' }}
-                      type="checkbox"
-                      id={c._id}
-                      onChange={(e) => handleCheck(e.target.checked, c._id)}
-                      className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
-                    />
-
-                    <label
-                      // style={{ width: 'content-fit' }}
-
-                      htmlFor={c._id}
-                      className={"ml-2 text-sm font-medium text-[teal] dark:text-gray-300 border px-2 py-1 rounded-lg" + (checked.includes(c._id) ? " bg-[yellow]" : "")}
-                    >
-                      {c.name}
-                    </label>
-
-                  </div>
+    <div className="ml-1">
+      <div className="flex md:flex-row">
+        <div className="py-3 mb-2 border-gray-200 border-r-2 px-5">
+          <h2 className="py-2 bg-white rounded-full text-start ml-2">
+            Categories
+          </h2>
+          <div className="w-60 mt-2 mb-5 flex flex-wrap">
+            {categories?.map((c) => (
+              <div key={c._id} className="mb-2 w-full">
+                <div className="flex items-center">
+                  <input
+                    type="checkbox"
+                    id={c._id}
+                    onChange={(e) => handleCheck(e.target.checked, c._id)}
+                    className="hidden"
+                  />
+                  <label
+                    htmlFor={c._id}
+                    className={`ml-2 text-sm cursor-pointer font-medium border-2 px-3 py-1 rounded-lg transition-colors duration-300 ${checked.includes(c._id)
+                      ? "bg-sky-700 text-white border-sky-300"
+                      : "text-sky-600 border-sky-600"
+                      }`}
+                  >
+                    {c.name}
+                  </label>
                 </div>
-              ))}
-            </div>
-
-            <h2 className="h4 text-start ml-2 py-2 bg-white rounded-full mb-2">
-              Filter by Brands
-            </h2>
-
-            {/* <div className="p-5">
-              {uniqueBrands?.map((brand) => (
-                <>
-                  <div className="flex items-enter mr-4 mb-5">
-                    <input
-                      type="radio"
-                      id={brand}
-                      name="brand"
-                      onChange={() => handleBrandClick(brand)}
-                      className="w-4 h-4 text-blue-400 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
-                    />
-
-                    <label
-                      htmlFor={brand}
-                      className="ml-2 text-sm font-medium text-[teal] dark:text-gray-300"
-                    >
-                      {brand}
-                    </label>
-                  </div>
-                </>
-              ))}
-            </div> */}
-
-            <div className="p-2">
-              {uniqueBrands?.map((brand) => (
-                <>
-                  <div className="flex items-enter mr-4 mb-5">
-                    <input
-                      style={{ display: 'none' }}
-                      type="checkbox"
-                      id={brand}
-                      name="brand"
-                      onChange={(e) => handleBrandCheck(e.target.checked, brand)}
-                      className={"w-4 h-4 text-blue-400 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"}
-                    />
-
-                    <label
-                      htmlFor={brand}
-                      className={"ml-2 text-sm font-medium text-[teal] dark:text-gray-300 border px-2 py-1 rounded-lg" + (selectedBrands.current.includes(brand) ? " bg-[yellow]" : "")}
-                    >
-                      {brand}
-                    </label>
-                  </div>
-                </>
-              ))}
-            </div>
-
-            <h2 className="h4 text-start ml-2 py-2 bg-white rounded-full mb-2">
-              Filer by Price
-            </h2>
-
-            <div className="p-2 w-[15rem]">
-              <input
-                type="text"
-                placeholder="Enter Price"
-                value={priceFilter}
-                onChange={handlePriceChange}
-                className="w-full px-3 py-2 placeholder-gray-400 border rounded-lg focus:outline-none focus:ring focus:border-blue-300"
-              />
-            </div>
-
-            <div className="p-5 pt-0">
-              <button
-                className="w-full border my-4 text-[teal]"
-                onClick={() => window.location.reload()}
-              >
-                Reset
-              </button>
-            </div>
+              </div>
+            ))}
           </div>
 
-          <div className="p-3">
-            {/* <h2 className="h4 text-center mb-2 bg-gray-400">{products?.length} Products</h2> */}
-            <div className="flex flex-wrap gap-3 justify-start items-center">
-              {products.length === 0 ? (
-                <Loader />
-              ) : (
-                products?.map((p) => (
-                  <div className="p-3" key={p._id}>
-                    <ProductCard p={p} />
-                  </div>
+          <h2 className="h4 text-start ml-2 py-1 bg-white rounded-full ">
+            Filter by Brands
+          </h2>
+          <div className="mt-2 mb-5 ml-2">
+            {uniqueBrands?.map((brand) => (
+              <div key={brand} className="mb-2 w-full">
+                <div className="flex items-center">
+                  <input
+                    type="checkbox"
+                    id={brand}
+                    name="brand"
+                    onChange={(e) => handleBrandCheck(e.target.checked, brand)}
+                    className="hidden"
+                  />
+                  <label
+                    htmlFor={brand}
+                    className={`text-sm cursor-pointer font-medium border-2 px-3 py-1 rounded-lg transition-colors duration-300 ${selectedBrands.current.includes(brand)
+                      ? "bg-teal-600 text-white border-teal-300"
+                      : "text-teal-600 border-teal-600"
+                      }`}
+                  >
+                    {brand}
+                  </label>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          <h2 className="h4 text-start ml-2 py-1 bg-white rounded-full">
+            Filter by Price
+          </h2>
+
+          <div className="mt-2 mb-5 ml-2 w-[15rem]">
+            <input
+              type="text"
+              placeholder="Enter Price"
+              value={priceFilter}
+              onChange={handlePriceChange}
+              className="w-full px-3 py-2 placeholder-gray-400 border-2 border-black/70 rounded-xl focus:outline-none"
+            />
+          </div>
+
+          <div className="px-4 mt-0">
+            <button
+              className="w-full border my-4 py-2  rounded-3xl bg-teal-600 text-white transition-colors duration-300"
+              onClick={() => window.location.reload()}
+            >
+              Reset
+            </button>
+          </div>
+        </div>
+
+        <div className="p-3">
+          {/* <h2 className="h4 text-center mb-2 bg-gray-400">{products?.length} Products</h2> */}
+          <div className="flex flex-wrap gap-3 justify-start items-center">
+            {products.length === 0 ? (
+              <Loader />
+            ) : (
+              products?.map((p) => (
+                <div className="p-3" key={p._id}>
+                  <ProductCard p={p} />
+                </div>
 
 
-                ))
-              )}
-            </div>
+              ))
+            )}
           </div>
         </div>
       </div>
-    </>
+    </div>
   );
 };
 
