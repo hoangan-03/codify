@@ -143,13 +143,13 @@ const Navigation = () => {
               <span className="hidden nav-item-name">LOGIN</span>
             </Link>
 
-            <Link
+            {/* <Link
               to="/register"
               className="flex items-center  transition-transform transform hover:translate-x-2"
             >
               <AiOutlineUserAdd size={26} />
               <span className="hidden nav-item-name">REGISTER</span>
-            </Link>
+            </Link> */}
 
           </div>
         )}

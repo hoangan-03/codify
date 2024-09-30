@@ -18,7 +18,8 @@ const Container = styled.div`
   height: 80vh;
   max-width: 100%;
   min-height: 480px;
-  left: 20%;
+  left: 15vw;
+  margin-top: 5vh;
 `;
 
 const SignUpContainer = styled.div`
