@@ -15,6 +15,8 @@ import { useSelector, useDispatch } from "react-redux";
 import { useLogoutMutation } from "../../redux/api/usersApiSlice";
 import { logout } from "../../redux/features/auth/authSlice";
 import FavoritesCount from "../Products/FavoritesCount";
+import "./styles.css";
+
 import { CgProfile } from "react-icons/cg";
 import { BiExpandHorizontal } from "react-icons/bi";
 
@@ -101,12 +103,12 @@ const Navigation = () => {
           onClick={toggleDropdown}
           className="flex items-center text-gray-800 focus:outline-none"
         >
-        {userInfo && userInfo.username ? (
-          <>
-            <span className="text-black">{userInfo.username}</span>
-            <BiExpandHorizontal className="ml-2 mr-2" size={20} />
-          </>
-        ) : null}
+          {userInfo && userInfo.username ? (
+            <>
+              <span className="text-black">{userInfo.username}</span>
+              <BiExpandHorizontal className="ml-2 mr-2" size={20} />
+            </>
+          ) : null}
         </button>
 
         {dropdownOpen && userInfo && (
@@ -141,13 +143,13 @@ const Navigation = () => {
               <span className="hidden nav-item-name">LOGIN</span>
             </Link>
 
-            <Link
+            {/* <Link
               to="/register"
               className="flex items-center  transition-transform transform hover:translate-x-2"
             >
               <AiOutlineUserAdd size={26} />
               <span className="hidden nav-item-name">REGISTER</span>
-            </Link>
+            </Link> */}
 
           </div>
         )}
