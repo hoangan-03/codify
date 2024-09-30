@@ -12,7 +12,7 @@ const App = () => {
       <ToastContainer />
       {userInfo ? (userInfo.isAdmin && <AdminMenu />) : null}
       <Navigation />
-      <main className="overflow-x-hidden w-screen">
+      <main className="overflow-x-hidden w-full">
         <Outlet />
       </main>
     </>
