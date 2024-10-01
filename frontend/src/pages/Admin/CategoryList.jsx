@@ -1,9 +1,9 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   useCreateCategoryMutation,
   useUpdateCategoryMutation,
   useDeleteCategoryMutation,
-  useFetchCategoriesQuery,
+  useFetchCategoriesQuery, 
 } from "../../redux/api/categoryApiSlice";
 
 import { toast } from "react-toastify";
@@ -11,7 +11,8 @@ import CategoryForm from "../../components/CategoryForm";
 import Modal from "../../components/Modal";
 
 const CategoryList = () => {
-  const { data: categories } = useFetchCategoriesQuery();
+  const { data : categories, refetch } = useFetchCategoriesQuery();
+
   const [name, setName] = useState("");
   const [selectedCategory, setSelectedCategory] = useState(null);
   const [updatingName, setUpdatingName] = useState("");
@@ -21,25 +22,30 @@ const CategoryList = () => {
   const [updateCategory] = useUpdateCategoryMutation();
   const [deleteCategory] = useDeleteCategoryMutation();
 
+  const toastOptions = {
+    position: "bottom-right",
+  };
+
   const handleCreateCategory = async (e) => {
     e.preventDefault();
 
     if (!name) {
-      toast.error("Category name is required");
+      toast.error("Category name is required", toastOptions);
       return;
     }
 
     try {
       const result = await createCategory({ name }).unwrap();
       if (result.error) {
-        toast.error(result.error);
+        toast.error(result.error, toastOptions);
       } else {
         setName("");
-        toast.success(`${result.name} is created.`);
+        toast.success(`${result.name} is created.`, toastOptions);
+        refetch();
       }
     } catch (error) {
       console.error(error);
-      toast.error("Creating category failed, try again.");
+      toast.error("Creating category failed, try again.", toastOptions);
     }
   };
 
@@ -47,7 +53,7 @@ const CategoryList = () => {
     e.preventDefault();
 
     if (!updatingName) {
-      toast.error("Category name is required");
+      toast.error("Category name is required", toastOptions);
       return;
     }
 
@@ -60,12 +66,13 @@ const CategoryList = () => {
       }).unwrap();
 
       if (result.error) {
-        toast.error(result.error);
+        toast.error(result.error, toastOptions);
       } else {
-        toast.success(`${result.name} is updated`);
+        toast.success(`${result.name} is updated`, toastOptions);
         setSelectedCategory(null);
         setUpdatingName("");
         setModalVisible(false);
+        refetch();
       }
     } catch (error) {
       console.error(error);
@@ -77,22 +84,23 @@ const CategoryList = () => {
       const result = await deleteCategory(selectedCategory._id).unwrap();
 
       if (result.error) {
-        toast.error(result.error);
+        toast.error(result.error, toastOptions);
       } else {
-        toast.success(`${result.name} is deleted.`);
+        toast.success(`${result.name} is deleted.`, toastOptions);
         setSelectedCategory(null);
         setModalVisible(false);
+        refetch();
       }
     } catch (error) {
       console.error(error);
-      toast.error("Category delection failed. Tray again.");
+      toast.error("Category delection failed. Tray again.", toastOptions);
     }
   };
 
   return (
     <div className="ml-[10rem] flex flex-col md:flex-row">
       <div className="md:w-3/4 p-3">
-        <div className="h-12">Manage Categories</div>
+        <h1>Manage Categories</h1>
         <CategoryForm
           value={name}
           setValue={setName}
@@ -105,7 +113,7 @@ const CategoryList = () => {
           {categories?.map((category) => (
             <div key={category._id}>
               <button
-                className="bg-white border border-blue-500 text-blue-500 py-2 px-4 rounded-lg m-3 hover:bg-blue-500 hover:text-black focus:outline-none foucs:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
+                className="bg-white border border-blue-500 text-blue-500 py-2 px-4 rounded-lg m-3 transition-all duration-100 hover:bg-gradient-to-l hover:from-blue-500 hover:to-blue-300 hover:border-white hover:text-white hover:transition-all hover:duration-100 focus:outline-none foucs:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
                 onClick={() => {
                   {
                     setModalVisible(true);

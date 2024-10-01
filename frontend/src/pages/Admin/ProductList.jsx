@@ -36,6 +36,11 @@ const ProductList = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    if (image === "") {
+      toast.error("Please select an image", toastOptions);
+      return;
+    }
+
     try {
       const productData = new FormData();
       productData.append("image", image);
@@ -61,14 +66,15 @@ const ProductList = () => {
       const { data } = await createProduct(productData);
 
       if (data.error) {
-        toast.error("Product create failed. Try Again.");
+        console.error(data.error);
+        toast.error(data.error, toastOptions);
       } else {
-        toast.success(`${data.name} is created`);
+        toast.success(`${data.name} is created`, toastOptions);
         navigate("/");
       }
     } catch (error) {
       console.error(error);
-      toast.error("Product create failed. Try Again.");
+      toast.error("Product create failed. Try Again.", toastOptions);
     }
   };
 
@@ -78,11 +84,11 @@ const ProductList = () => {
 
     try {
       const res = await uploadProductImage(formData).unwrap();
-      toast.success(res.message);
+      toast.success(res.message, toastOptions);
       setImage(res.image);
       setImageUrl(res.image);
     } catch (error) {
-      toast.error(error?.data?.message || error.error);
+      toast.error(error?.data?.message || error.error, toastOptions);
     }
   };
 
@@ -95,22 +101,27 @@ const ProductList = () => {
 
       try {
         const res = await uploadProductCode(formData).unwrap();
-        toast.success(res.message);
+        toast.success(res.message, toastOptions);
         setCode(res.code);
         setCodeUrl(res.code);
       } catch (error) {
-        toast.error(error?.data?.message || error.error);
+        toast.error(error?.data?.message || error.error, toastOptions);
       }
     } else {
-      toast.error("Please upload a valid ZIP file.");
+      toast.error("Please upload a valid ZIP file.", toastOptions);
     }
+  };
+
+  const inputBoxStyle = "p-4 mb-3 w-[30rem] border rounded-lg bg-[#fff] text-black";
+  const toastOptions = {
+    position: "bottom-right",
   };
 
   return (
     <div className="container xl:mx-[9rem] sm:mx-[0]">
       <div className="flex flex-col md:flex-row">
         <div className="md:w-3/4 p-3">
-          <div className="h-12">Create Product</div>
+          <h1>Create Product</h1>
 
           {imageUrl && (
             <div className="text-center">
@@ -151,12 +162,12 @@ const ProductList = () => {
           </div>
 
           <div className="p-3">
-            <div className="flex flex-wrap">
+            <div className="flex flex-wrap justify-between gap-5">
               <div className="one">
                 <label htmlFor="name">Name</label> <br />
                 <input
                   type="text"
-                  className="p-4 mb-3 w-[30rem] border rounded-lg bg-[#101011] text-black"
+                  className={inputBoxStyle}
                   value={name}
                   onChange={(e) => setName(e.target.value)}
                 />
@@ -165,19 +176,21 @@ const ProductList = () => {
                 <label htmlFor="name block">Price</label> <br />
                 <input
                   type="number"
-                  className="p-4 mb-3 w-[30rem] border rounded-lg bg-[#101011] text-black"
+                  className={inputBoxStyle}
                   value={price}
+                  min={0}
                   onChange={(e) => setPrice(e.target.value)}
                 />
               </div>
             </div>
-            <div className="flex flex-wrap">
+            <div className="flex flex-wrap justify-between gap-5">
               <div className="one">
                 <label htmlFor="name block">Quantity</label> <br />
                 <input
                   type="number"
-                  className="p-4 mb-3 w-[30rem] border rounded-lg bg-[#101011] text-black"
+                  className={inputBoxStyle}
                   value={quantity}
+                  min={0}
                   onChange={(e) => setQuantity(e.target.value)}
                 />
               </div>
@@ -185,7 +198,7 @@ const ProductList = () => {
                 <label htmlFor="name block">Brand</label> <br />
                 <input
                   type="text"
-                  className="p-4 mb-3 w-[30rem] border rounded-lg bg-[#101011] text-black"
+                  className={inputBoxStyle}
                   value={brand}
                   onChange={(e) => setBrand(e.target.value)}
                 />
@@ -197,17 +210,17 @@ const ProductList = () => {
             </label>
             <textarea
               type="text"
-              className="p-2 mb-3 bg-[#101011] border rounded-lg w-[95%] text-black"
+              className="w-full p-2 mb-3 bg-[#fff] border rounded-lg w-[95%] text-black"
               value={description}
               onChange={(e) => setDescription(e.target.value)}
             ></textarea>
 
-            <div className="flex justify-between">
+            <div className="flex justify-between gap-5">
               <div>
                 <label htmlFor="name block">Count In Stock</label> <br />
                 <input
                   type="text"
-                  className="p-4 mb-3 w-[30rem] border rounded-lg bg-[#101011] text-black"
+                  className={inputBoxStyle}
                   value={stock}
                   onChange={(e) => setStock(e.target.value)}
                 />
@@ -217,7 +230,7 @@ const ProductList = () => {
                 <label htmlFor="">Category</label> <br />
                 <select
                   placeholder="Choose Category"
-                  className="p-4 mb-3 w-[30rem] border rounded-lg bg-[#101011] text-black"
+                  className={inputBoxStyle}
                   value={category}
                   onChange={(e) => setCategory(e.target.value)}
                 >
@@ -232,9 +245,11 @@ const ProductList = () => {
 
             <button
               onClick={handleSubmit}
-              className="py-4 px-10 mt-5 rounded-lg text-lg font-bold bg-blue-600"
+              className="py-4 px-10 mt-5 confirm"
             >
-              Submit
+              <p>
+                Submit
+              </p>
             </button>
           </div>
         </div>
