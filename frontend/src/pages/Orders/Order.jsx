@@ -240,7 +240,7 @@ const Order = () => {
             <div>
               <button
                 type="button"
-                className="bg-blue-500 text-black w-full py-2"
+                className="bg-blue-500 text-black w-full py-2 hover:bg-blue-600"
                 onClick={deliverHandler}
               >
                 Mark As Delivered
@@ -248,8 +248,8 @@ const Order = () => {
             </div>
           )}
           <div className="mt-4">
-            <button className="text-white bg-blue-500 text-black w-full py-2">
-              <Link to="/admin/orderlist">Back</Link>
+            <button className="text-white bg-blue-500 text-black w-full py-2 hover:bg-blue-600">
+              <a href="/admin/orderlist">Back</a>
             </button>
           </div>
         </div>
