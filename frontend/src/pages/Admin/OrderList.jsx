@@ -76,9 +76,30 @@ const OrderList = () => {
                   </td>
 
                   <td>
-                    <Link to={`/order/${order._id}`}>
-                      <button>More</button>
-                    </Link>
+                  <Link to={`/order/${order._id}`}>
+                    <button className="flex items-center border-2 border-black text-black font-bold py-2 px-4 rounded-full hover:bg-gray-100">
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        strokeWidth={2}
+                        stroke="currentColor"
+                        className="w-5 h-5 mr-2"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
+                        />
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          d="M2.458 12C3.732 7.943 7.523 5 12 5c4.477 0 8.268 2.943 9.542 7-1.274 4.057-5.065 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"
+                        />
+                      </svg>
+                      View More
+                    </button>
+                  </Link>
                   </td>
                 </tr>
               ))}
