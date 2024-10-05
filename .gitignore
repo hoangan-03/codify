@@ -3,3 +3,5 @@
 /backend/.env
 /frontend/.env
 /frontend/node_modules
+/tmp/appmap
+appmap.yml

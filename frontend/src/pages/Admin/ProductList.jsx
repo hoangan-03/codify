@@ -210,7 +210,7 @@ const ProductList = () => {
             </label>
             <textarea
               type="text"
-              className="w-full p-2 mb-3 bg-[#fff] border rounded-lg w-[95%] text-black"
+              className="w-full p-2 mb-3 bg-[#fff] border rounded-lg text-black"
               value={description}
               onChange={(e) => setDescription(e.target.value)}
             ></textarea>
