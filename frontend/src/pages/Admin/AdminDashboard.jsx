@@ -11,129 +11,125 @@ import OrderList from "./OrderList";
 import Loader from "../../components/Loader";
 
 const AdminDashboard = () => {
-  const { data: sales, isLoading } = useGetTotalSalesQuery();
-  const { data: customers, isLoading: loading } = useGetUsersQuery();
-  const { data: orders, isLoading: loadingTwo } = useGetTotalOrdersQuery();
+  const { data: sales, isLoading: salesLoading } = useGetTotalSalesQuery();
+  const { data: customers, isLoading: customersLoading } = useGetUsersQuery();
+  const { data: orders, isLoading: ordersLoading } = useGetTotalOrdersQuery();
   const { data: salesDetail } = useGetTotalSalesByDateQuery();
 
-  const [state, setState] = useState({
-    options: {
-      chart: {
-        type: "line",
-      },
-      tooltip: {
-        theme: "dark",
-      },
-      colors: ["#00E396"],
-      dataLabels: {
-        enabled: true,
-      },
-      stroke: {
-        curve: "smooth",
-      },
-      title: {
-        text: "Sales Trend",
-        align: "left",
-      },
-      grid: {
-        borderColor: "#ccc",
-      },
-      markers: {
-        size: 1,
-      },
-      xaxis: {
-        categories: [],
-        title: {
-          text: "Date",
-        },
-      },
-      yaxis: {
-        title: {
-          text: "Sales",
-        },
-        min: 0,
-      },
-      legend: {
-        position: "top",
-        horizontalAlign: "right",
-        floating: true,
-        offsetY: -25,
-        offsetX: -5,
-      },
-    },
+  const [chartData, setChartData] = useState({
     series: [{ name: "Sales", data: [] }],
+    xaxis: { categories: [] },
   });
 
   useEffect(() => {
     if (salesDetail) {
-      const formattedSalesDate = salesDetail.map((item) => ({
+      const formattedSales = salesDetail.map((item) => ({
         x: item._id,
         y: item.totalSales,
       }));
 
-      setState((prevState) => ({
-        ...prevState,
-        options: {
-          ...prevState.options,
-          xaxis: {
-            categories: formattedSalesDate.map((item) => item.x),
-          },
-        },
-
-        series: [
-          { name: "Sales", data: formattedSalesDate.map((item) => item.y) },
-        ],
-      }));
+      setChartData({
+        series: [{ name: "Sales", data: formattedSales.map((item) => item.y) }],
+        xaxis: { categories: formattedSales.map((item) => item.x) },
+      });
     }
   }, [salesDetail]);
 
+  const chartOptions = {
+    chart: {
+      type: "line",
+      toolbar: {
+        show: false, // Hide toolbar for cleaner look
+      },
+    },
+    tooltip: {
+      theme: "dark",
+    },
+    colors: ["#00E396"],
+    dataLabels: {
+      enabled: true,
+    },
+    stroke: {
+      curve: "smooth",
+    },
+    title: {
+      text: "Sales Trend",
+      align: "left",
+    },
+    grid: {
+      borderColor: "#ccc",
+    },
+    markers: {
+      size: 1,
+    },
+    xaxis: {
+      title: {
+        text: "Date",
+      },
+    },
+    yaxis: {
+      title: {
+        text: "Sales",
+      },
+      min: 0,
+    },
+    legend: {
+      position: "top",
+      horizontalAlign: "right",
+      floating: true,
+      offsetY: -25,
+      offsetX: -5,
+    },
+  };
+
   return (
     <>
-
       <section className="xl:ml-[4rem] md:ml-[0rem]">
-        <div className="w-[80%] flex justify-around flex-wrap">
-          <div className="rounded-lg bg-white p-5 w-[20rem] mt-5">
-            <div className="font-bold rounded-full w-[3rem] bg-blue-500 text-center p-3">
-              $
+        <div className="flex justify-between flex-wrap">
+          {/* Stats cards */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <div className="rounded-lg bg-white p-5">
+              <div className="font-bold rounded-full w-[3rem] bg-blue-500 text-center p-3">
+                $
+              </div>
+              <p className="mt-5">Sales</p>
+              <h1 className="text-xl font-bold">
+                {salesLoading ? <Loader /> : sales?.totalSales.toFixed(2)}
+              </h1>
             </div>
-
-            <p className="mt-5">Sales</p>
-            <h1 className="text-xl font-bold">
-              $ {isLoading ? <Loader /> : sales.totalSales.toFixed(2)}
-            </h1>
-          </div>
-          <div className="rounded-lg bg-white p-5 w-[20rem] mt-5">
-            <div className="font-bold rounded-full w-[3rem] bg-blue-500 text-center p-3">
-              $
+            <div className="rounded-lg bg-white p-5">
+              <div className="font-bold rounded-full w-[3rem] bg-teal-500 text-center p-3">
+                #
+              </div>
+              <p className="mt-5">Customers</p>
+              <h1 className="text-xl font-bold">
+                {customersLoading ? <Loader /> : customers?.length}
+              </h1>
             </div>
-
-            <p className="mt-5">Customers</p>
-            <h1 className="text-xl font-bold">
-              $ {isLoading ? <Loader /> : customers?.length}
-            </h1>
-          </div>
-          <div className="rounded-lg bg-white p-5 w-[20rem] mt-5">
-            <div className="font-bold rounded-full w-[3rem] bg-blue-500 text-center p-3">
-              $
+            <div className="rounded-lg bg-white p-5">
+              <div className="font-bold rounded-full w-[3rem] bg-orange-500 text-center p-3">
+                #
+              </div>
+              <p className="mt-5">All Orders</p>
+              <h1 className="text-xl font-bold">
+                {ordersLoading ? <Loader /> : orders?.totalOrders || 0}
+              </h1>
             </div>
-
-            <p className="mt-5">All Orders</p>
-            <h1 className="text-xl font-bold">
-              $ {isLoading ? <Loader /> : orders?.totalOrders}
-            </h1>
           </div>
         </div>
 
-        <div className="ml-[10rem] mt-[4rem]">
+        {/* Chart */}
+        <div className="mt-10">
           <Chart
-            options={state.options}
-            series={state.series}
-            type="bar"
-            width="70%"
+            options={chartOptions}
+            series={chartData.series}
+            type="line"
+            height={350}
           />
         </div>
 
-        <div className="mt-[4rem]">
+        {/* Orders List */}
+        <div className="mt-10">
           <OrderList />
         </div>
       </section>

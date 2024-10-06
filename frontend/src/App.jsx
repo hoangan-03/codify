@@ -8,14 +8,19 @@ import { useSelector } from "react-redux";
 const App = () => {
   const { userInfo } = useSelector((state) => state.auth);
   return (
-    <>
-      <ToastContainer />
-      {userInfo ? (userInfo.isAdmin && <AdminMenu />) : null}
-      <Navigation />
-      <main className="overflow-x-hidden w-full">
-        <Outlet />
-      </main>
-    </>
+    <div className=' flex w-[100vw]'>
+      <div className='w-[15vw]'>
+        {userInfo ? (userInfo.isAdmin && <AdminMenu />) : null}
+      </div>
+
+      <div className='w-[85vw]'>
+        <ToastContainer />
+        <Navigation />
+        <main className="overflow-x-hidden w-full">
+          <Outlet />
+        </main>
+      </div>
+    </div>
   );
 };
 
