@@ -7,8 +7,8 @@ import {
   AiOutlineShoppingCart,
   AiOutlineLogout,
 } from "react-icons/ai";
-import { FaHeart } from "react-icons/fa";
-import { Link } from "react-router-dom";
+import { FaRegHeart } from "react-icons/fa";
+import { Link, useLocation } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import "./Navigation.css";
 import { useSelector, useDispatch } from "react-redux";
@@ -33,6 +33,7 @@ const Navigation = () => {
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const location = useLocation();
 
   const [logoutApiCall] = useLogoutMutation();
 
@@ -46,40 +47,45 @@ const Navigation = () => {
     }
   };
 
+  const isActive = (path) => location.pathname === path;
+
   return (
     <div
       style={{ zIndex: 9999 }}
       className={`${showSidebar ? "hidden" : "flex"
-        } xl:flex lg:flex md:hidden sm:hidden justify-between p-4 text-black bg-white  w-full   `}
+        } xl:flex lg:flex md:hidden sm:hidden justify-between p-4 text-black bg-white w-full`}
       id="navigation-container"
     >
-      <div className="flex justify-center items-center space-x-20 ml-6">
+      <div className="flex justify-center items-center gap-24 ml-12 lg:ml-[200px]">
         <Link
           to="/"
-          className="flex items-center transition-transform transform hover:translate-x-2"
+          className={`flex items-center transition-transform transform hover:translate-x-2 ${isActive("/") ? "text-sky-600" : ""
+            }`}
         >
-          <AiOutlineHome className="ml-2 mr-2 " size={26} />
-          <span className="hidden nav-item-name ">HOME</span>{" "}
+          <AiOutlineHome className="ml-2 mr-2" size={26} />
+          <span className="hidden nav-item-name">HOME</span>
         </Link>
 
         <Link
           to="/shop"
-          className="flex items-center transition-transform transform hover:translate-x-2"
+          className={`flex items-center transition-transform transform hover:translate-x-2 ${isActive("/shop") ? "text-sky-600" : ""
+            }`}
         >
-          <AiOutlineShopping className="ml-2 mr-2 " size={26} />
-          <span className="hidden nav-item-name ">SHOP</span>{" "}
+          <AiOutlineShopping className="ml-2 mr-2" size={26} />
+          <span className="hidden nav-item-name">SHOP</span>
         </Link>
 
         <Link to="/cart" className="flex relative">
-          <div className="flex items-center transition-transform transform hover:translate-x-2">
-            <AiOutlineShoppingCart className=" ml-2 mr-2" size={26} />
-            <span className="hidden nav-item-name ">Cart</span>{" "}
+          <div className={`flex items-center transition-transform transform hover:translate-x-2 ${isActive("/cart") ? "text-sky-600" : ""
+            }`}>
+            <AiOutlineShoppingCart className="ml-2 mr-2" size={26} />
+            <span className="hidden nav-item-name">Cart</span>
           </div>
 
           <div className="absolute top-5 left-6">
             {cartItems.length > 0 && (
               <span>
-                <span className="px-1 py-0 text-sm text-white bg-pink-500 rounded-full">
+                <span className="px-1 py-0 text-sm text-white bg-blue-500 rounded-full">
                   {cartItems.reduce((a, c) => a + c.qty, 0)}
                 </span>
               </span>
@@ -88,11 +94,10 @@ const Navigation = () => {
         </Link>
 
         <Link to="/favorite" className="flex relative">
-          <div className="flex justify-center items-center transition-transform transform hover:translate-x-2">
-            <FaHeart className=" ml-2 mr-2" size={20} />
-            <span className="hidden nav-item-name ">
-              Favorites
-            </span>{" "}
+          <div className={`flex justify-center items-center transition-transform transform hover:translate-x-2 ${isActive("/favorite") ? "text-sky-600" : ""
+            }`}>
+            <FaRegHeart className="ml-2 mr-2" size={20} />
+            <span className="hidden nav-item-name">Favorites</span>
             <FavoritesCount />
           </div>
         </Link>
@@ -112,13 +117,13 @@ const Navigation = () => {
         </button>
 
         {dropdownOpen && userInfo && (
-          <div className={`flex space-x-10`}
-          >
+          <div className="flex space-x-10">
             <Link
               to="/profile"
-              className="flex items-center  transition-transform transform hover:translate-x-2"
+              className={`flex items-center transition-transform transform hover:translate-x-2 ${isActive("/profile") ? "text-sky-600" : ""
+                }`}
             >
-              <CgProfile className="ml-2 mr-2 " size={26} />
+              <CgProfile className="ml-2 mr-2" size={26} />
               <span className="hidden nav-item-name">Profile</span>
             </Link>
 
@@ -129,28 +134,26 @@ const Navigation = () => {
               <AiOutlineLogout className="ml-2 mr-2" size={26} />
               <span className="hidden nav-item-name">Logout</span>
             </button>
-
           </div>
         )}
         {!userInfo && (
-          <div className={`flex space-x-10`}>
-
+          <div className="flex space-x-10">
             <Link
               to="/login"
-              className="flex items-center  transition-transform transform hover:translate-x-2"
+              className={`flex items-center transition-transform transform hover:translate-x-2 ${isActive("/login") ? "text-sky-600" : ""
+                }`}
             >
-              <AiOutlineLogin className="ml-2 mr-2 " size={26} />
+              <AiOutlineLogin className="ml-2 mr-2" size={26} />
               <span className="hidden nav-item-name">LOGIN</span>
             </Link>
 
             {/* <Link
               to="/register"
-              className="flex items-center  transition-transform transform hover:translate-x-2"
+              className="flex items-center transition-transform transform hover:translate-x-2"
             >
               <AiOutlineUserAdd size={26} />
               <span className="hidden nav-item-name">REGISTER</span>
             </Link> */}
-
           </div>
         )}
       </div>

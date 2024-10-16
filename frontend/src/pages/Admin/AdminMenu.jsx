@@ -1,6 +1,10 @@
 import { useState } from "react";
 import { NavLink } from "react-router-dom";
-import { FaTimes } from "react-icons/fa";
+import { FaBars, FaTimes, FaTachometerAlt, FaPlus, FaList, FaUsers, FaBox, FaClipboardList, FaCog } from "react-icons/fa";
+import { MdOutlinePageview, MdLibraryBooks } from "react-icons/md";
+import { AiOutlineSchedule, AiFillSetting } from "react-icons/ai";
+import { BsGraphUp, BsTags } from "react-icons/bs";
+import { RiPagesLine } from "react-icons/ri";
 
 const AdminMenu = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -11,94 +15,99 @@ const AdminMenu = () => {
 
   return (
     <>
-      {/* <button
+      <button
         onClick={toggleMenu}
-        className={`${isMenuOpen ? "left-60" : "left-0"} fixed top-2  z-50 bg-[#151515] p-3 `}
+        className="fixed top-2 left-2 z-50 p-2"
       >
-        <div className="w-6 h-0.5 bg-gray-200 my-1"></div>
-        <div className="w-6 h-0.5 bg-gray-200 my-1"></div>
-        <div className="w-6 h-0.5 bg-gray-200 my-1"></div>
-      </button> */}
-      {true && (
-        <div className={` ${true ? "h-[100vh]" : ""}  bg-[#151515] p-2 fixed   z-50`}>
-
-
-          {(true &&
-            <section className="bg-[#151515] p-4  right-7 top-5 z-50  w-[12vw]">
-              <ul className="list-none mt-2">
-                <li>
-                  <NavLink
-                    className="list-item py-2 px-3 block mb-5 hover:bg-[#2E2D2D] rounded-sm"
-                    to="/admin/dashboard"
-                    style={({ isActive }) => ({
-                      color: isActive ? "greenyellow" : "white",
-                    })}
-                  >
-                    Admin Dashboard
-                  </NavLink>
-                </li>
-                <li>
-                  <NavLink
-                    className="list-item py-2 px-3 block mb-5 hover:bg-[#2E2D2D] rounded-sm"
-                    to="/admin/categorylist"
-                    style={({ isActive }) => ({
-                      color: isActive ? "greenyellow" : "white",
-                    })}
-                  >
-                    Create Category
-                  </NavLink>
-                </li>
-                <li>
-                  <NavLink
-                    className="list-item py-2 px-3 block mb-5 hover:bg-[#2E2D2D] rounded-sm"
-                    to="/admin/productlist"
-                    style={({ isActive }) => ({
-                      color: isActive ? "greenyellow" : "white",
-                    })}
-                  >
-                    Create Product
-                  </NavLink>
-                </li>
-                <li>
-                  <NavLink
-                    className="list-item py-2 px-3 block mb-5 hover:bg-[#2E2D2D] rounded-sm"
-                    to="/admin/allproductslist"
-                    style={({ isActive }) => ({
-                      color: isActive ? "greenyellow" : "white",
-                    })}
-                  >
-                    All Products
-                  </NavLink>
-                </li>
-                <li>
-                  <NavLink
-                    className="list-item py-2 px-3 block mb-5 hover:bg-[#2E2D2D] rounded-sm"
-                    to="/admin/userlist"
-                    style={({ isActive }) => ({
-                      color: isActive ? "greenyellow" : "white",
-                    })}
-                  >
-                    Manage Users
-                  </NavLink>
-                </li>
-                <li>
-                  <NavLink
-                    className="list-item py-2 px-3 block mb-5 hover:bg-[#2E2D2D] rounded-sm"
-                    to="/admin/orderlist"
-                    style={({ isActive }) => ({
-                      color: isActive ? "greenyellow" : "white",
-                    })}
-                  >
-                    Manage Orders
-                  </NavLink>
-                </li>
-              </ul>
-            </section>
-          )}
-        </div>
-      )}
+        {isMenuOpen ? <FaTimes className="text-black" size={24} /> : <FaBars className="text-black" size={24} />}
+      </button>
+      <div
+        className={`h-[100vh] bg-gray-100 p-2 fixed z-40 w-[18vw] transition-transform duration-300 ${isMenuOpen ? "translate-x-0" : "-translate-x-full"
+          }`}
+      >
+        <section className="p-4 w-full">
+          <ul className="list-none mt-10 flex flex-col gap-2">
+            <li>
+              <NavLink
+                className=" py-2 px-3 flex items-center hover:bg-gray-200 rounded-xl text-base font-semibold"
+                to="/admin/dashboard"
+                style={({ isActive }) => ({
+                  color: isActive ? "blue" : "black",
+                })}
+              >
+                <FaTachometerAlt className="mr-3 text-lg" /> Admin Dashboard
+              </NavLink>
+            </li>
+            <li>
+              <NavLink
+                className="py-2 px-3 flex items-center hover:bg-gray-200 rounded-xl text-base font-semibold"
+                to="/admin/categorylist"
+                style={({ isActive }) => ({
+                  color: isActive ? "blue" : "black",
+                })}
+              >
+                <FaPlus className="mr-3 text-lg" /> Create Category
+              </NavLink>
+            </li>
+            <li>
+              <NavLink
+                className="py-2 px-3 flex items-center hover:bg-gray-200 rounded-xl text-base font-semibold"
+                to="/admin/productlist"
+                style={({ isActive }) => ({
+                  color: isActive ? "blue" : "black",
+                })}
+              >
+                <FaBox className="mr-3 text-lg" /> Create Product
+              </NavLink>
+            </li>
+            <li>
+              <NavLink
+                className="py-2 px-3 flex items-center hover:bg-gray-200 rounded-xl text-base font-semibold"
+                to="/admin/allproductslist"
+                style={({ isActive }) => ({
+                  color: isActive ? "blue" : "black",
+                })}
+              >
+                <FaClipboardList className="mr-3 text-lg" /> All Products
+              </NavLink>
+            </li>
+            <li>
+              <NavLink
+                className="py-2 px-3 flex items-center hover:bg-gray-200 rounded-xl text-base font-semibold"
+                to="/admin/userlist"
+                style={({ isActive }) => ({
+                  color: isActive ? "blue" : "black",
+                })}
+              >
+                <FaUsers className="mr-3 text-lg" /> Manage Users
+              </NavLink>
+            </li>
+            <li>
+              <NavLink
+                className="py-2 px-3 flex items-center hover:bg-gray-200 rounded-xl text-base font-semibold"
+                to="/admin/orderlist"
+                style={({ isActive }) => ({
+                  color: isActive ? "blue" : "black",
+                })}
+              >
+                <MdLibraryBooks className="mr-3 text-lg" /> Manage Orders
+              </NavLink>
+            </li>
+            <li>
+              <NavLink
+                className="py-2 px-3 flex items-center hover:bg-gray-200 rounded-xl text-base font-semibold"
+                to="/admin/settings"
+                style={({ isActive }) => ({
+                  color: isActive ? "blue" : "black",
+                })}
+              >
+                <AiFillSetting className="mr-3 text-lg" /> Settings
+              </NavLink>
+            </li>
+          </ul>
+        </section>
+      </div>
     </>
-
   );
 };
 
