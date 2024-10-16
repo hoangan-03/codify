@@ -29,7 +29,10 @@ const AdminMenu = () => {
           <ul className="list-none mt-10 flex flex-col gap-2">
             <li>
               <NavLink
-                className=" py-2 px-3 flex items-center hover:bg-gray-200 rounded-xl text-base font-semibold"
+                className={({ isActive }) =>
+                  `py-2 px-3 flex items-center rounded-xl text-base font-semibold ${isActive ? "bg-gray-200" : "hover:bg-gray-200"
+                  }`
+                }
                 to="/admin/dashboard"
                 style={({ isActive }) => ({
                   color: isActive ? "blue" : "black",
@@ -40,7 +43,10 @@ const AdminMenu = () => {
             </li>
             <li>
               <NavLink
-                className="py-2 px-3 flex items-center hover:bg-gray-200 rounded-xl text-base font-semibold"
+                className={({ isActive }) =>
+                  `py-2 px-3 flex items-center rounded-xl text-base font-semibold ${isActive ? "bg-gray-200" : "hover:bg-gray-200"
+                  }`
+                }
                 to="/admin/categorylist"
                 style={({ isActive }) => ({
                   color: isActive ? "blue" : "black",
@@ -51,7 +57,10 @@ const AdminMenu = () => {
             </li>
             <li>
               <NavLink
-                className="py-2 px-3 flex items-center hover:bg-gray-200 rounded-xl text-base font-semibold"
+                className={({ isActive }) =>
+                  `py-2 px-3 flex items-center rounded-xl text-base font-semibold ${isActive ? "bg-gray-200" : "hover:bg-gray-200"
+                  }`
+                }
                 to="/admin/productlist"
                 style={({ isActive }) => ({
                   color: isActive ? "blue" : "black",
@@ -62,7 +71,10 @@ const AdminMenu = () => {
             </li>
             <li>
               <NavLink
-                className="py-2 px-3 flex items-center hover:bg-gray-200 rounded-xl text-base font-semibold"
+                className={({ isActive }) =>
+                  `py-2 px-3 flex items-center rounded-xl text-base font-semibold ${isActive ? "bg-gray-200" : "hover:bg-gray-200"
+                  }`
+                }
                 to="/admin/allproductslist"
                 style={({ isActive }) => ({
                   color: isActive ? "blue" : "black",
@@ -73,7 +85,10 @@ const AdminMenu = () => {
             </li>
             <li>
               <NavLink
-                className="py-2 px-3 flex items-center hover:bg-gray-200 rounded-xl text-base font-semibold"
+                className={({ isActive }) =>
+                  `py-2 px-3 flex items-center rounded-xl text-base font-semibold ${isActive ? "bg-gray-200" : "hover:bg-gray-200"
+                  }`
+                }
                 to="/admin/userlist"
                 style={({ isActive }) => ({
                   color: isActive ? "blue" : "black",
@@ -84,7 +99,10 @@ const AdminMenu = () => {
             </li>
             <li>
               <NavLink
-                className="py-2 px-3 flex items-center hover:bg-gray-200 rounded-xl text-base font-semibold"
+                className={({ isActive }) =>
+                  `py-2 px-3 flex items-center rounded-xl text-base font-semibold ${isActive ? "bg-gray-200" : "hover:bg-gray-200"
+                  }`
+                }
                 to="/admin/orderlist"
                 style={({ isActive }) => ({
                   color: isActive ? "blue" : "black",
@@ -95,7 +113,10 @@ const AdminMenu = () => {
             </li>
             <li>
               <NavLink
-                className="py-2 px-3 flex items-center hover:bg-gray-200 rounded-xl text-base font-semibold"
+                className={({ isActive }) =>
+                  `py-2 px-3 flex items-center rounded-xl text-base font-semibold ${isActive ? "bg-gray-200" : "hover:bg-gray-200"
+                  }`
+                }
                 to="/admin/settings"
                 style={({ isActive }) => ({
                   color: isActive ? "blue" : "black",
